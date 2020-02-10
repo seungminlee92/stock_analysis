@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.defaultLanguage": "python",
+		"code-runner.defaultLanguage": "python"
+	}
+}

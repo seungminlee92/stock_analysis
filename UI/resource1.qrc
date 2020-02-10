@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="images">
+    <file>images/beautifulsoup.png</file>
+    <file>images/keras.png</file>
+    <file>images/matplotlib.png</file>
+    <file>images/numpy.png</file>
+    <file>images/pandas.png</file>
+    <file>images/pyqt.jpg</file>
+    <file>images/python.png</file>
+    <file>images/scipy.png</file>
+    <file>images/sklearn.jpg</file>
+    <file>images/tensorflow.png</file>
+  </qresource>
+</RCC>
