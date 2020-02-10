@@ -9,7 +9,7 @@ from numpy import polyval
 from PyQt5 import uic
 from PyQt5.QtWidgets import *
 
-from modules.corrpre import data_corr, fluctuate_prob, pred
+from modules.corrpre import data_corr#, fluctuate_prob, pred
 from modules.get_data import change_data, get_stocklist, stock_1_data, stock_2_data
 from modules.table_view import add_fluctuate, add_index, df_tableView, make_pd
 
@@ -21,13 +21,13 @@ font_name = font_manager.FontProperties(
 rc('font', family = font_name)
 rcParams['axes.unicode_minus'] = False
 
-# Ui_MainWindow = uic.loadUiType('UI/20.01.10.ui')[0]
+# Ui_MainWindow = uic.loadUiType('UI/20.01.11.ui')[0]
 
 class WindowClass(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.setWindowTitle('v.20.01.10')
+        self.setWindowTitle('v.20.01.11')
         
         # global values
         self.stock_list = get_stocklist()
@@ -77,36 +77,36 @@ class WindowClass(QMainWindow, Ui_MainWindow):
         
         self.corr_list = self.stock_prices = self.stock_name_list = self.data_len = ''
 
-        # tab_4 ; 주가 예측
-        #action btns
-        self.Start_btn4.clicked.connect(self.pre_pred)
-        self.Reset_btn4.clicked.connect(self.stop_pred)
-        self.start_pred_btn4.clicked.connect(self.start_pred)
-        self.data_len4.returnPressed.connect(self.pre_pred)
-        self.stock_num4.returnPressed.connect(self.pre_pred)
-        self.show_graph_btn4.clicked.connect(self.show_pred)
-        self.Reset_btn4.setEnabled(False)
-        self.label4_3.setEnabled(False)
-        self.start_date4.setEnabled(False)
-        self.label4_4.setEnabled(False)
-        self.end_date4.setEnabled(False)
-        self.label4_5.setEnabled(False)
-        self.window_sizer.setEnabled(False)
-        self.w_s_default.setEnabled(False)
-        self.w_s_manual.setEnabled(False)
-        self.spliter.setEnabled(False)
-        self.spliter_default.setEnabled(False)
-        self.spliter_manual.setEnabled(False)
-        self.b_s.setEnabled(False)
-        self.b_s_default.setEnabled(False)
-        self.b_s_manual.setEnabled(False)
-        self.epoch.setEnabled(False)
-        self.epoch_default.setEnabled(False)
-        self.epoch_manual.setEnabled(False)
-        self.start_pred_btn4.setEnabled(False)
-        self.show_graph_btn4.setEnabled(False)
+        # # tab_4 : 주가 예측
+        # #action btns
+        # self.Start_btn4.clicked.connect(self.pre_pred)
+        # self.Reset_btn4.clicked.connect(self.stop_pred)
+        # self.start_pred_btn4.clicked.connect(self.start_pred)
+        # self.data_len4.returnPressed.connect(self.pre_pred)
+        # self.stock_num4.returnPressed.connect(self.pre_pred)
+        # self.show_graph_btn4.clicked.connect(self.show_pred)
+        # self.Reset_btn4.setEnabled(False)
+        # self.label4_3.setEnabled(False)
+        # self.start_date4.setEnabled(False)
+        # self.label4_4.setEnabled(False)
+        # self.end_date4.setEnabled(False)
+        # self.label4_5.setEnabled(False)
+        # self.window_sizer.setEnabled(False)
+        # self.w_s_default.setEnabled(False)
+        # self.w_s_manual.setEnabled(False)
+        # self.spliter.setEnabled(False)
+        # self.spliter_default.setEnabled(False)
+        # self.spliter_manual.setEnabled(False)
+        # self.b_s.setEnabled(False)
+        # self.b_s_default.setEnabled(False)
+        # self.b_s_manual.setEnabled(False)
+        # self.epoch.setEnabled(False)
+        # self.epoch_default.setEnabled(False)
+        # self.epoch_manual.setEnabled(False)
+        # self.start_pred_btn4.setEnabled(False)
+        # self.show_graph_btn4.setEnabled(False)
         
-        self.w_s = self.train_pred = self.test_pred = self.test_len = '' 
+        # self.w_s = self.train_pred = self.test_pred = self.test_len = '' 
     # UI Actions
     # tab1
     def load_data(self):
@@ -359,185 +359,185 @@ p-value : {round(self.corr_list[3], 5)}'''
         self.show_graph_btn3.setEnabled(False)
         self.result3_1.setText(text)
 
-    # tab4
-    def pre_pred(self):
-        data_len = self.data_len4.text()
-        stock_num = str(self.stock_num4.text())
+    # # tab4
+    # def pre_pred(self):
+    #     data_len = self.data_len4.text()
+    #     stock_num = str(self.stock_num4.text())
         
-        df = self.stock_list
-        text = ''
-        try:
-            if len(str(data_len)) == 0:
-                text = '불러올 데이터 갯수를 입력하세요.'
-            elif len(str(stock_num)) == 0:
-                text = '종목 코드를 입력하세요.'
-            elif data_len.isdigit() == False:
-                text = '데이터 갯수는 숫자로만 입력가능합니다'
-            elif stock_num.isdigit() == False:
-                text = '종목코드는 숫자로만 입력가능합니다.'
-            elif int(data_len) % 10 != 0:
-                text = '올바른 데이터 갯수가 아닙니다. (10의 배수로만 입력가능)'
-            elif int(data_len) % 100 != 0:
-                text = '데이터는 100개이상의 10의 배수로만 가져올 수 있습니다.'
-            elif stock_num not in list(df[df.columns[1]]):
-                raise KeyError
-            else:
-                self.Start_btn4.setEnabled(False)
-                self.Reset_btn4.setEnabled(True)
-                self.data_len4.setEnabled(False)
-                self.stock_num4.setEnabled(False)
-                self.label4_3.setEnabled(True)
-                self.start_date2.setEnabled(True)
-                self.label4_4.setEnabled(True)
-                self.end_date2.setEnabled(True)
-                self.label4_5.setEnabled(True)
-                self.w_s_default.setEnabled(True)
-                self.w_s_manual.setEnabled(True)
-                self.window_sizer.setEnabled(True)
-                self.spliter_default.setEnabled(True)
-                self.spliter_manual.setEnabled(True)
-                self.spliter.setEnabled(True)
-                self.b_s_default.setEnabled(True)
-                self.b_s_manual.setEnabled(True)
-                self.b_s.setEnabled(True)
-                self.epoch_default.setEnabled(True)
-                self.epoch_manual.setEnabled(True)
-                self.epoch.setEnabled(True)
-                self.start_pred_btn4.setEnabled(True)
-                self.show_graph_btn4.setEnabled(True)
+    #     df = self.stock_list
+    #     text = ''
+    #     try:
+    #         if len(str(data_len)) == 0:
+    #             text = '불러올 데이터 갯수를 입력하세요.'
+    #         elif len(str(stock_num)) == 0:
+    #             text = '종목 코드를 입력하세요.'
+    #         elif data_len.isdigit() == False:
+    #             text = '데이터 갯수는 숫자로만 입력가능합니다'
+    #         elif stock_num.isdigit() == False:
+    #             text = '종목코드는 숫자로만 입력가능합니다.'
+    #         elif int(data_len) % 10 != 0:
+    #             text = '올바른 데이터 갯수가 아닙니다. (10의 배수로만 입력가능)'
+    #         elif int(data_len) % 100 != 0:
+    #             text = '데이터는 100개이상의 10의 배수로만 가져올 수 있습니다.'
+    #         elif stock_num not in list(df[df.columns[1]]):
+    #             raise KeyError
+    #         else:
+    #             self.Start_btn4.setEnabled(False)
+    #             self.Reset_btn4.setEnabled(True)
+    #             self.data_len4.setEnabled(False)
+    #             self.stock_num4.setEnabled(False)
+    #             self.label4_3.setEnabled(True)
+    #             self.start_date2.setEnabled(True)
+    #             self.label4_4.setEnabled(True)
+    #             self.end_date2.setEnabled(True)
+    #             self.label4_5.setEnabled(True)
+    #             self.w_s_default.setEnabled(True)
+    #             self.w_s_manual.setEnabled(True)
+    #             self.window_sizer.setEnabled(True)
+    #             self.spliter_default.setEnabled(True)
+    #             self.spliter_manual.setEnabled(True)
+    #             self.spliter.setEnabled(True)
+    #             self.b_s_default.setEnabled(True)
+    #             self.b_s_manual.setEnabled(True)
+    #             self.b_s.setEnabled(True)
+    #             self.epoch_default.setEnabled(True)
+    #             self.epoch_manual.setEnabled(True)
+    #             self.epoch.setEnabled(True)
+    #             self.start_pred_btn4.setEnabled(True)
+    #             self.show_graph_btn4.setEnabled(True)
                 
 
-                self.result = stock_1_data(data_len, stock_num)
-                self.stock_num_list = []
+    #             self.result = stock_1_data(data_len, stock_num)
+    #             self.stock_num_list = []
                 
-                stock_name = change_data(df, stock_num)
-                self.result_ = add_fluctuate(self.result)
-                text = f'{data_len}개의 {stock_name} 데이터를 불러왔습니다.'
-                model = df_tableView(self.result_.T)
+    #             stock_name = change_data(df, stock_num)
+    #             self.result_ = add_fluctuate(self.result)
+    #             text = f'{data_len}개의 {stock_name} 데이터를 불러왔습니다.'
+    #             model = df_tableView(self.result_.T)
             
-                self.start_date4.setText(self.result_.index[0])
-                self.end_date4.setText(self.result_.index[-1])                
-                self.tableView4.setModel(model)
-        except KeyError:
-            text = '존재하지 않는 종목 코드 입니다. (첫번째 탭에서 확인가능)'
-        finally:
-            self.result4_1.setText(text)
+    #             self.start_date4.setText(self.result_.index[0])
+    #             self.end_date4.setText(self.result_.index[-1])                
+    #             self.tableView4.setModel(model)
+    #     except KeyError:
+    #         text = '존재하지 않는 종목 코드 입니다. (첫번째 탭에서 확인가능)'
+    #     finally:
+    #         self.result4_1.setText(text)
     
-    def start_pred(self):
-        self.Reset_btn4.setEnabled(False)
-        df = self.result
-        try:
-            if self.w_s_default.isChecked():
-                self.w_s = 5
-            else:
-                if len(self.window_sizer.text()) == 0:
-                    reason = 'set size'
-                    raise KeyError
-                else:
-                    self.w_s = int(self.window_sizer.text())
+    # def start_pred(self):
+    #     self.Reset_btn4.setEnabled(False)
+    #     df = self.result
+    #     try:
+    #         if self.w_s_default.isChecked():
+    #             self.w_s = 5
+    #         else:
+    #             if len(self.window_sizer.text()) == 0:
+    #                 reason = 'set size'
+    #                 raise KeyError
+    #             else:
+    #                 self.w_s = int(self.window_sizer.text())
                     
-            if self.spliter_default.isChecked():
-                s = 0.7
-            else:
-                if len(self.spliter.text()) == 0:
-                    reason = 'spliter'
-                    raise KeyError
-                else: s = float(self.spliter.text())
+    #         if self.spliter_default.isChecked():
+    #             s = 0.7
+    #         else:
+    #             if len(self.spliter.text()) == 0:
+    #                 reason = 'spliter'
+    #                 raise KeyError
+    #             else: s = float(self.spliter.text())
                 
-            if self.b_s_default.isChecked():
-                b_s = 1
-            else: 
-                if len(self.b_s.text()) == 0:
-                    reason = 'batch size'
-                    raise KeyError
-                else: b_s = int(self.b_s.text())
+    #         if self.b_s_default.isChecked():
+    #             b_s = 1
+    #         else: 
+    #             if len(self.b_s.text()) == 0:
+    #                 reason = 'batch size'
+    #                 raise KeyError
+    #             else: b_s = int(self.b_s.text())
                 
-            if self.epoch_default.isChecked():
-                epoch = 10
-            else: 
-                if len(self.epoch.text()) == 0:
-                    reason = 'epoch'
-                    raise KeyError
-                else: epoch = int(self.epoch.text())
+    #         if self.epoch_default.isChecked():
+    #             epoch = 10
+    #         else: 
+    #             if len(self.epoch.text()) == 0:
+    #                 reason = 'epoch'
+    #                 raise KeyError
+    #             else: epoch = int(self.epoch.text())
             
-            self.train_pred, self.test_pred, self.test_len = pred(df, self.w_s, s, b_s, epoch)
-        except KeyError: 
-            text = f'{reason}를 올바르게 설정하세요'
-            self.result4_1.setText(text)
-        finally: 
-            self.result4_2.setText('데이터 학습을 완료했습니다.')
-            self.Reset_btn4.setEnabled(True)
+    #         self.train_pred, self.test_pred, self.test_len = pred(df, self.w_s, s, b_s, epoch)
+    #     except KeyError: 
+    #         text = f'{reason}를 올바르게 설정하세요'
+    #         self.result4_1.setText(text)
+    #     finally: 
+    #         self.result4_2.setText('데이터 학습을 완료했습니다.')
+    #         self.Reset_btn4.setEnabled(True)
             
-    def show_pred(self):
-        df = self.result
-        train_pred, test_pred, test_len = self.train_pred, self.test_pred, self.test_len
-        train_pred_idx = df.index[self.w_s:-(test_len-1)]
-        test_pred_idx = df.index[-test_len:]
+    # def show_pred(self):
+    #     df = self.result
+    #     train_pred, test_pred, test_len = self.train_pred, self.test_pred, self.test_len
+    #     train_pred_idx = df.index[self.w_s:-(test_len-1)]
+    #     test_pred_idx = df.index[-test_len:]
         
-        raw_df = make_pd(list(df[df.columns[0]]), df.index, 'real')
-        train_df = make_pd(train_pred, train_pred_idx, 'trained')
-        test_df = make_pd(test_pred, test_pred_idx, 'tested')
+    #     raw_df = make_pd(list(df[df.columns[0]]), df.index, 'real')
+    #     train_df = make_pd(train_pred, train_pred_idx, 'trained')
+    #     test_df = make_pd(test_pred, test_pred_idx, 'tested')
         
-        self.result_df = raw_df.merge(
-            train_df, 
-            how = 'outer', 
-            left_index = True, 
-            right_index = True
-        ).merge(
-            test_df,
-            how = 'outer', 
-            left_index = True, 
-            right_index = True
-        )
+    #     self.result_df = raw_df.merge(
+    #         train_df, 
+    #         how = 'outer', 
+    #         left_index = True, 
+    #         right_index = True
+    #     ).merge(
+    #         test_df,
+    #         how = 'outer', 
+    #         left_index = True, 
+    #         right_index = True
+    #     )
         
-        raw_df = self.result_
-        test_df = add_fluctuate(test_df)
+    #     raw_df = self.result_
+    #     test_df = add_fluctuate(test_df)
         
-        prob_dic = fluctuate_prob(raw_df, test_df, test_len)
-        acc = (prob_dic['i_i'] + prob_dic['d_d'] + prob_dic['f_f']) / sum(prob_dic.values())
-        self.i_i.setText(str(prob_dic['i_i']))
-        self.i_d.setText(str(prob_dic['i_d']))
-        self.i_f.setText(str(prob_dic['i_f']))
-        self.d_i.setText(str(prob_dic['d_i']))
-        self.d_d.setText(str(prob_dic['d_d']))
-        self.d_f.setText(str(prob_dic['d_f']))
-        self.f_i.setText(str(prob_dic['f_i']))
-        self.f_d.setText(str(prob_dic['f_d']))
-        self.f_f.setText(str(prob_dic['f_f']))
-        self.acc.setText(f'{str(round(acc, 2)*100)}%')
+    #     prob_dic = fluctuate_prob(raw_df, test_df, test_len)
+    #     acc = (prob_dic['i_i'] + prob_dic['d_d'] + prob_dic['f_f']) / sum(prob_dic.values())
+    #     self.i_i.setText(str(prob_dic['i_i']))
+    #     self.i_d.setText(str(prob_dic['i_d']))
+    #     self.i_f.setText(str(prob_dic['i_f']))
+    #     self.d_i.setText(str(prob_dic['d_i']))
+    #     self.d_d.setText(str(prob_dic['d_d']))
+    #     self.d_f.setText(str(prob_dic['d_f']))
+    #     self.f_i.setText(str(prob_dic['f_i']))
+    #     self.f_d.setText(str(prob_dic['f_d']))
+    #     self.f_f.setText(str(prob_dic['f_f']))
+    #     self.acc.setText(f'{str(round(acc, 2)*100)}%')
             
-        self.result_df.plot()
-        plt.show()
+    #     self.result_df.plot()
+    #     plt.show()
         
-    def stop_pred(self):
-        model = df_tableView(self.empty_df)
-        text = '초기화되었습니다.'
+    # def stop_pred(self):
+    #     model = df_tableView(self.empty_df)
+    #     text = '초기화되었습니다.'
 
-        self.Start_btn4.setEnabled(True)
-        self.Reset_btn4.setEnabled(False)
-        self.data_len4.setEnabled(True)
-        self.stock_num4.setEnabled(True)
-        self.label4_3.setEnabled(False)
-        self.start_date2.setEnabled(False)
-        self.label4_4.setEnabled(False)
-        self.end_date2.setEnabled(False)
-        self.label4_5.setEnabled(False)
-        self.window_sizer.setEnabled(False)
-        self.w_s_default.setEnabled(False)
-        self.w_s_manual.setEnabled(False)
-        self.spliter.setEnabled(False)
-        self.spliter_default.setEnabled(False)
-        self.spliter_manual.setEnabled(False)
-        self.b_s.setEnabled(False)
-        self.b_s_default.setEnabled(False)
-        self.b_s_manual.setEnabled(False)
-        self.epoch.setEnabled(False)
-        self.epoch_default.setEnabled(False)
-        self.epoch_manual.setEnabled(False)
-        self.start_pred_btn4.setEnabled(False)
-        self.show_graph_btn4.setEnabled(False)
-        # self.tableView4.setModel(model)
-        self.result4_1.setText(text)
+    #     self.Start_btn4.setEnabled(True)
+    #     self.Reset_btn4.setEnabled(False)
+    #     self.data_len4.setEnabled(True)
+    #     self.stock_num4.setEnabled(True)
+    #     self.label4_3.setEnabled(False)
+    #     self.start_date2.setEnabled(False)
+    #     self.label4_4.setEnabled(False)
+    #     self.end_date2.setEnabled(False)
+    #     self.label4_5.setEnabled(False)
+    #     self.window_sizer.setEnabled(False)
+    #     self.w_s_default.setEnabled(False)
+    #     self.w_s_manual.setEnabled(False)
+    #     self.spliter.setEnabled(False)
+    #     self.spliter_default.setEnabled(False)
+    #     self.spliter_manual.setEnabled(False)
+    #     self.b_s.setEnabled(False)
+    #     self.b_s_default.setEnabled(False)
+    #     self.b_s_manual.setEnabled(False)
+    #     self.epoch.setEnabled(False)
+    #     self.epoch_default.setEnabled(False)
+    #     self.epoch_manual.setEnabled(False)
+    #     self.start_pred_btn4.setEnabled(False)
+    #     self.show_graph_btn4.setEnabled(False)
+    #     # self.tableView4.setModel(model)
+    #     self.result4_1.setText(text)
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
