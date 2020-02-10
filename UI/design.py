@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '20.01.10.ui'
+# Form implementation generated from reading ui file '20.01.11.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.0
 #
@@ -960,11 +960,11 @@ class Ui_MainWindow(object):
         self.toolBox.setGeometry(QtCore.QRect(30, 380, 421, 191))
         self.toolBox.setObjectName("toolBox")
         self.page_4 = QtWidgets.QWidget()
-        self.page_4.setGeometry(QtCore.QRect(0, 0, 98, 28))
+        self.page_4.setGeometry(QtCore.QRect(0, 0, 100, 30))
         self.page_4.setObjectName("page_4")
         self.toolBox.addItem(self.page_4, "")
         self.page = QtWidgets.QWidget()
-        self.page.setGeometry(QtCore.QRect(0, 0, 98, 28))
+        self.page.setGeometry(QtCore.QRect(0, 0, 100, 30))
         self.page.setObjectName("page")
         self.tableView4 = QtWidgets.QTableView(self.page)
         self.tableView4.setGeometry(QtCore.QRect(0, 0, 421, 111))
@@ -1242,11 +1242,16 @@ class Ui_MainWindow(object):
         self.show_graph_btn4 = QtWidgets.QPushButton(self.tab_4)
         self.show_graph_btn4.setGeometry(QtCore.QRect(250, 310, 201, 31))
         self.show_graph_btn4.setObjectName("show_graph_btn4")
+        self.lineEdit = QtWidgets.QLineEdit(self.tab_4)
+        self.lineEdit.setGeometry(QtCore.QRect(30, 10, 431, 561))
+        self.lineEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.lineEdit.setReadOnly(True)
+        self.lineEdit.setObjectName("lineEdit")
         self.tab_5.addTab(self.tab_4, "")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.plainTextEdit = QtWidgets.QPlainTextEdit(self.tab)
-        self.plainTextEdit.setGeometry(QtCore.QRect(120, 460, 241, 101))
+        self.plainTextEdit.setGeometry(QtCore.QRect(80, 460, 311, 101))
         self.plainTextEdit.setMaximumSize(QtCore.QSize(311, 16777215))
         self.plainTextEdit.setReadOnly(True)
         self.plainTextEdit.setObjectName("plainTextEdit")
@@ -1395,12 +1400,13 @@ class Ui_MainWindow(object):
         self.label4_9.setText(_translate("MainWindow", "real"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), _translate("MainWindow", "정확도"))
         self.show_graph_btn4.setText(_translate("MainWindow", "show graph"))
+        self.lineEdit.setText(_translate("MainWindow", "준 비 중"))
         self.tab_5.setTabText(self.tab_5.indexOf(self.tab_4), _translate("MainWindow", "주가 예측"))
-        self.plainTextEdit.setPlainText(_translate("MainWindow", "       Stock Data Analysis and Predict\n"
+        self.plainTextEdit.setPlainText(_translate("MainWindow", "           Stock Data Analysis\n"
 "Producer: S\n"
 "Version : 1.0\n"
 "Last Update : 2020.01.10\n"
 "\n"
-"이 프로그램은 비영리 목적으로 배포함"))
+"참고: github.com/seungminlee92/stock_analysis"))
         self.tab_5.setTabText(self.tab_5.indexOf(self.tab), _translate("MainWindow", "정보"))
 import resource1_rc
